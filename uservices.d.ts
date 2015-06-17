@@ -1,4 +1,4 @@
-declare module 'uservices/src/rfp' {
+declare module 'uservices/rfp' {
 	export interface Observer<T> {
 	    onNext(value: T): void;
 	    onError(exception: any): void;
@@ -15,8 +15,8 @@ declare module 'uservices/src/rfp' {
 	}
 
 }
-declare module 'uservices/src/spec' {
-	import { Observable } from 'uservices/src/rfp';
+declare module 'uservices/spec' {
+	import { Observable } from './rfp';
 	export type Type = string | ArrayType | ObjectType;
 	export interface ArrayType {
 	    type: Type;
@@ -52,14 +52,14 @@ declare module 'uservices/src/spec' {
 	export function visitor(onMethod: (name: string, method: Method) => void): (spec: Spec<any>) => void;
 
 }
-declare module 'uservices/src/specGenerator' {
+declare module 'uservices/specGenerator' {
 	import * as s from 'typescript-schema';
-	import { Spec } from 'uservices/src/spec';
+	import { Spec } from './spec';
 	export function generateSpec(moduleSchema: s.ModuleSchema, interfaceSchema: s.InterfaceSchema): Spec<any>;
 
 }
-declare module 'uservices/src/split' {
-	import { Spec, Action, Function, Event, Method, Methods } from 'uservices/src/spec';
+declare module 'uservices/split' {
+	import { Spec, Action, Function, Event, Method, Methods } from './spec';
 	export interface Actions {
 	    [name: string]: Action;
 	}
@@ -85,10 +85,13 @@ declare module 'uservices/src/split' {
 	export function splitService<T>(spec: Spec<T>, service: T): SplitService;
 
 }
-declare module 'uservices' {
-	export * from 'uservices/src/rfp';
-	export * from 'uservices/src/spec';
-	export * from 'uservices/src/specGenerator';
-	export * from 'uservices/src/split';
+declare module 'uservices/index' {
+	export * from './rfp';
+	export * from './spec';
+	export * from './specGenerator';
+	export * from './split';
 
+}
+declare module 'uservices' {
+	export * from 'index';
 }
