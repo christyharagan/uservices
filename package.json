@@ -1,9 +1,9 @@
 {
   "name": "uservices",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Provides a portable way of defining service interfaces that supports actions (a la the actor model), asynchronous functions (via promises), and asynchronous sequences (via observables).",
   "main": "dist/js/index.js",
-  "repository": "christyharagan/uservice",
+  "repository": "christyharagan/uservices",
   "author": {
     "name": "Christy Haragan",
     "email": "christy.haragan.github@gmail.com",
