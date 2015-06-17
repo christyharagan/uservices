@@ -15,13 +15,13 @@ Usage
 
 Install:
 ```
-npm install uservice
+npm install uservices
 ```
 
 Basic Usage:
 
 ```TypeScript
-import * as uservice from 'uservice'
+import * as uservices from 'uservices'
 import * as tss from 'typescript-schema'
 
 let schema = tss.generateSchema({
@@ -29,9 +29,9 @@ let schema = tss.generateSchema({
 })
 let moduleSchema = schema['myServiceModule.ts']
 
-let spec = uservice.generateSpec(moduleSchema, moduleSchema.interfaces['MyServiceInterface'])
+let spec = uservices.generateSpec(moduleSchema, moduleSchema.interfaces['MyServiceInterface'])
 
-let methods = uservice.splitService(spec, myService)
+let methods = uservices.splitService(spec, myService)
 
 // Methods with a void return type
 console.log(methods.actions)
@@ -44,7 +44,7 @@ console.log(methods.events)
 
 ```
 
-Note, that the ```uservice.Observable<T>``` interface is compatable with the [rx IObservable](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/observable.md) interface
+Note, that the ```uservices.Observable<T>``` interface is compatable with the [rx IObservable](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/observable.md) interface
 
 Remote Proxy libraries
 --
