@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "emitDecoratorMetadata": true,
+        "declaration": false,
+        "module": "commonjs",
+        "rootDir": ".",
+        "sourceMap": true,
+        "sourceRoot": ".",
+        "target": "es5",
+        "outDir": "./dist/js"
+    },
+    "package": "./package.json",
+    "filesGlob": [
+        "./module/**/*.ts",
+        "./node_modules/typescript-schema/typescript-schema.d.ts"
+    ],
+    "files": [
+        "./module/index.ts",
+        "./module/src/rfp.ts",
+        "./module/src/spec.ts",
+        "./module/src/specGenerator.ts",
+        "./module/src/split.ts",
+        "./module/typings/es6/es6.d.ts",
+        "./module/typings/node/node.d.ts",
+        "./module/typings/tsd.d.ts",
+        "./node_modules/typescript-schema/typescript-schema.d.ts"
+    ]
+}

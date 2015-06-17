@@ -1,0 +1,28 @@
+{
+  "name": "uservices",
+  "version": "0.1.0",
+  "description": "Provides a portable way of defining service interfaces that supports actions (a la the actor model), asynchronous functions (via promises), and asynchronous sequences (via observables).",
+  "main": "dist/js/index.js",
+  "repository": "christyharagan/uservice",
+  "author": {
+    "name": "Christy Haragan",
+    "email": "christy.haragan.github@gmail.com",
+    "url": "https://github.com/christyharagan"
+  },
+  "keywords": [
+    "service",
+    "portable",
+    "asynchronous",
+    "observable",
+    "actor",
+    "micro"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "typescript-schema": "^0.1.0"
+  },
+  "devDependencies": {
+    "dts-generator": "git://github.com/SitePen/dts-generator.git",
+    "gulp": "^3.9.0"
+  }
+}
