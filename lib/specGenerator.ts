@@ -15,7 +15,7 @@ export function generateSpec(moduleSchema: s.ModuleSchema, interfaceSchema: s.In
 
   s.interfaceSchemaVisitor(interfaceSchema, {
     onInterfaceMember: function(memberSchema) {
-      if (memberSchema.type['parameters']) {
+      if (memberSchema.type.typeKind === s.TypeKind.FUNCTION) {
         let functionSchema = <s.FunctionSchema> memberSchema.type
         let parameters: Parameter[] = []
 
@@ -28,7 +28,7 @@ export function generateSpec(moduleSchema: s.ModuleSchema, interfaceSchema: s.In
 
         let cardinality: number
         let returnType: Type;
-        if (functionSchema.type === 'void') {
+        if (!functionSchema.type) {
           cardinality = 0
           returnType = ''
         } else if ((<s.TypeReference>functionSchema.type).type === 'Observable') {

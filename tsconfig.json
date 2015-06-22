@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "emitDecoratorMetadata": true,
-        "declaration": false,
+        "declaration": true,
         "module": "commonjs",
         "noImplicitAny": false,
         "noLib": false,
@@ -14,7 +14,8 @@
     "filesGlob": [
         "./lib/**/*.ts",
         "./typings/**/*.d.ts",
-        "./node_modules/typescript-schema/typescript-schema.d.ts"
+        "./node_modules/typescript-schema/typescript-schema.d.ts",
+        "./uservices.d.ts"
     ],
     "compileOnSave": true,
     "files": [
@@ -26,6 +27,7 @@
         "./typings/es6/es6.d.ts",
         "./typings/node/node.d.ts",
         "./typings/tsd.d.ts",
-        "./node_modules/typescript-schema/typescript-schema.d.ts"
+        "./node_modules/typescript-schema/typescript-schema.d.ts",
+        "./uservices.d.ts"
     ]
 }
