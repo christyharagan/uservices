@@ -9,18 +9,8 @@ declare module "uservices/dist/lib/rfp"{
     export = tmp;
 }
 
-declare module "uservices/dist/lib/spec"{
-    import tmp = require('dist/lib/spec');
-    export = tmp;
-}
-
-declare module "uservices/dist/lib/specGenerator"{
-    import tmp = require('dist/lib/specGenerator');
-    export = tmp;
-}
-
-declare module "uservices/dist/lib/split"{
-    import tmp = require('dist/lib/split');
+declare module "uservices/dist/lib/specVisitor"{
+    import tmp = require('dist/lib/specVisitor');
     export = tmp;
 }
 

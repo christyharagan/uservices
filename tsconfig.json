@@ -21,9 +21,7 @@
     "files": [
         "./lib/index.ts",
         "./lib/rfp.ts",
-        "./lib/spec.ts",
-        "./lib/specGenerator.ts",
-        "./lib/split.ts",
+        "./lib/specVisitor.ts",
         "./typings/es6/es6.d.ts",
         "./typings/node/node.d.ts",
         "./typings/tsd.d.ts",
