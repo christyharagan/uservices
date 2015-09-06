@@ -1,8 +1,9 @@
 {
   "name": "uservices",
-  "version": "0.3.0",
-  "description": "Provides a portable way of defining service interfaces that supports actions (a la the actor model), asynchronous functions (via promises), and asynchronous sequences (via observables).",
+  "version": "0.4.0",
+  "description": "Library to enable remoting of an object with asynchronous functions.",
   "main": "dist/lib/index.js",
+  "typings": "./uservices.d.ts",
   "repository": "christyharagan/uservices",
   "author": {
     "name": "Christy Haragan",
@@ -22,6 +23,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "typescript-schema": "^0.3.0"
+    "typescript": "^1.5.3",
+    "typescript-schema": "^0.5.0"
   }
 }

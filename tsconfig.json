@@ -11,21 +11,29 @@
         "target": "es5",
         "outDir": "./dist"
     },
+    "formatCodeOptions": {
+        "indentSize": 2,
+        "tabSize": 2
+    },
     "filesGlob": [
         "./lib/**/*.ts",
         "./typings/**/*.d.ts",
-        "./node_modules/typescript-schema/typescript-schema.d.ts",
-        "./uservices.d.ts"
+        "./node_modules/*/*.d.ts",
+        "./node_modules/typescript/bin/typescript.d.ts"
     ],
     "compileOnSave": true,
     "files": [
+        "./lib/decorators.ts",
+        "./lib/generator.ts",
         "./lib/index.ts",
+        "./lib/model.ts",
         "./lib/rfp.ts",
+        "./lib/serialiserParser.ts",
         "./lib/specVisitor.ts",
         "./typings/es6/es6.d.ts",
         "./typings/node/node.d.ts",
         "./typings/tsd.d.ts",
         "./node_modules/typescript-schema/typescript-schema.d.ts",
-        "./uservices.d.ts"
+        "./node_modules/typescript/bin/typescript.d.ts"
     ]
 }

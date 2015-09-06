@@ -1,61 +1,36 @@
-import * as s from 'typescript-schema'
+import * as m from './model'
 
-export type Spec = s.Interface|s.Class
-
-export interface ClassSpecVisitor {
-  onPromise(methodSchema: s.ClassMember, functionType?: s.FunctionType):void
-
-  onObservable(methodSchema: s.ClassMember, functionType?: s.FunctionType):void
+export interface ServicesVisitor<S extends m.Service<any, any>, M extends m.Method<any>, E extends m.Event<any>> {
+  onService(service: S): void|ServiceVisitor<M, E>
 }
 
-export interface InterfaceSpecVisitor {
-  onPromise(methodSchema: s.InterfaceMember, functionType?: s.FunctionType):void
+export interface ServiceVisitor<M extends m.Method<any>, E extends m.Event<any>> {
+  onMethod?(method: M): void
 
-  onObservable(methodSchema: s.InterfaceMember, functionType?: s.FunctionType):void
+  onEvent?(event: E): void
 }
 
-export function visitSpec(specVisitor:InterfaceSpecVisitor, serviceSchema: s.Interface): void
-export function visitSpec(specVisitor:ClassSpecVisitor, serviceSchema: s.Class): void
+export function visitServices<S extends m.Service<any, any>, M extends m.Method<any>, E extends m.Event<any>>(services: m.Services<S>, visitor: ServicesVisitor<S, M, E>): void {
+  Object.keys(services).forEach(function(name) {
+    let service = services[name]
+    let v = visitor.onService(service)
+    if (v) {
+      visitService(service, <ServiceVisitor<M, E>>v)
+    }
+  })
+}
 
-export function visitSpec(specVisitor:InterfaceSpecVisitor|ClassSpecVisitor, serviceSchema: s.Type): void {
-  if (serviceSchema.typeKind === s.TypeKind.CLASS) {
-    let classSpecVisitor = <ClassSpecVisitor> specVisitor
-    s.classSchemaVisitor(<s.Class>serviceSchema, {
-      onClassMember: function(memberSchema) {
-        if (memberSchema.type.typeKind === s.TypeKind.FUNCTION) {
-          let functionSchema = <s.FunctionType> memberSchema.type
-          let type = functionSchema.type
-          if (type.typeKind === s.TypeKind.REFINED) {
-            let refined = <s.RefinedType<any>> type
-            type = refined.type
-          }
-          if ((<s.NamedType>type).name === 'Observable') {
-            classSpecVisitor.onObservable(memberSchema, functionSchema)
-          } else if ((<s.NamedType>type).name === 'Promise') {
-            classSpecVisitor.onPromise(memberSchema, functionSchema)
-          }
-        }
-      }
+export function visitService<S extends m.Service<any, any>, M extends m.Method<any>, E extends m.Event<any>>(service: S, visitor: ServiceVisitor<M, E>): void {
+  if (visitor.onMethod && service.methods) {
+    Object.keys(service.methods).forEach(function(name) {
+      let method = service.methods[name]
+      visitor.onMethod(method)
     })
-  } else {
-    let interfaceSpecVisitor = <InterfaceSpecVisitor>specVisitor
-    s.interfaceSchemaVisitor(<s.Interface>serviceSchema, {
-      onInterfaceMember: function(memberSchema) {
-        if (memberSchema.type.typeKind === s.TypeKind.FUNCTION) {
-          let functionSchema = <s.FunctionType> memberSchema.type
-          let type = functionSchema.type
-          if (type.typeKind === s.TypeKind.REFINED) {
-            let refined = <s.RefinedType<any>> type
-            type = refined.type
-          }
-
-          if ((<s.NamedType>type).name === 'Observable') {
-            interfaceSpecVisitor.onObservable(memberSchema, functionSchema)
-          } else if ((<s.NamedType>type).name === 'Promise') {
-            interfaceSpecVisitor.onPromise(memberSchema, functionSchema)
-          }
-        }
-      }
+  }
+  if (visitor.onEvent && service.events) {
+    Object.keys(service.events).forEach(function(name) {
+      let event = service.events[name]
+      visitor.onEvent(event)
     })
   }
 }

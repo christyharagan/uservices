@@ -15,18 +15,8 @@ export interface Observable<T> {
 }
 
 export interface Subject<T> extends Observer<T>, Observable<T> {
-
 }
 
 export interface Disposable {
   dispose(): void;
 }
-
-// export interface ControlledObservable<T> extends Observable<T> {
-//   request(numberOfItems?: number): Disposable;
-// }
-//
-// export interface PausableObservable<T> extends Observable<T> {
-//   pause(): void;
-//   resume(): void;
-// }

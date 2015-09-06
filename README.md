@@ -1,14 +1,20 @@
-Micro (u)Services
+Remotable Micro (u)Services
 ==
 
 Overview
 --
 
-Provides a portable way of defining service interfaces that supports actions (a la the actor model), asynchronous functions (via promises), and asynchronous sequences (via observables).
+A uService is just an object with asynchronous functions (returning either Promises or Observables). Functions returning Promises are referred to as methods, and functions returning Observables (which must currently be compatible with [rxjs](https://github.com/Reactive-Extensions/RxJS)) are referred to as events.
 
-Supports creation of a service interface (or spec) from a TypeScript interface, although the actual spec is just a JSON format.
+This library defines a specification that allows easy creation of proxies of these uServices, e.g. for remote use.
 
-Once a spec has been defined, remote proxies of the services can be deployed using one of the various libraries listed below
+This specification is just a JSON format, which can be either created directly, or generated from code analysis. The example provided below uses the [typescript-schema](https://github.com/christyharagan/ts-schema) library to analyse TypeScript code in order to output a corresponding specification.
+
+Moreover, this specification format is extensible. For example, the [markscript-uservices](https://github.com/christyharagan/markscript-uservices) library extends this to allow uServices to be implemented in, or proxies deployed to, a [MarkLogic](www.marklogic.com) server.
+
+A javascript model of a spec can be found under the model module in this library, and allows for easy programmatic usage of a spec.
+
+A number of libraries also provide abstractions over various transports to easily create remote proxies for uServices; some of these are listed at the end.
 
 Usage
 --
@@ -20,31 +26,65 @@ npm install uservices
 
 Basic Usage:
 
-```TypeScript
-import * as uservices from 'uservices'
-import * as tss from 'typescript-schema'
-
-let schema = tss.generateSchema({
-  'myServiceModule.ts': fs.readFileSync('myServiceModule.ts')
-})
-let moduleSchema = schema['myServiceModule.ts']
-
-let spec = uservices.generateSpec(moduleSchema, moduleSchema.interfaces['MyServiceInterface'])
-
-let methods = uservices.splitService(spec, myService)
-
-// Methods with a void return type
-console.log(methods.actions)
-
-// Methods with a Promise<T> return type
-console.log(methods.functions)
-
-// Methods with an uservice.Observable<T> return type
-console.log(methods.events)
-
+An example specification: (All fields are optional)
+```
+{
+  "myService": {
+    "implementation": {
+      "moduleName": "my/javascript/module",
+      "className": "MyService"
+    },
+    "methods": {
+      "someMethod": {
+        "type": {}
+      }
+    },
+    "events": {
+      "someEvent": {}
+    }
+  }
+}
 ```
 
-Note, that the ```uservices.Observable<T>``` interface is compatable with the [rx IObservable](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/observable.md) interface
+To parse a JSON spec into a javascript model:
+```TypeScript
+import * as u from 'uservices'
+
+let someSpecJSON
+
+let spec = u.parse(someSpecJSON)
+```
+
+To easily navigate a specification (javascript model):
+```TypeScript
+import * as u from 'uservices'
+
+let someSpec
+
+u.visitServices(someSpec, {
+  onService: function(serviceSpec){
+    return {
+      onMethod: function(methodSpec){
+        let name = methodSpec.name
+      },
+      onEvent: function(eventSpec){
+        let name = eventSpec.name
+      }
+    }
+  }
+})
+```
+
+To generate a spec from a typescript-schema model:
+
+```TypeScript
+import * as u from 'uservices'
+import * as s from 'typescript-schema'
+
+let module:s.Map<s.Module>
+
+let specs = u.generateServiceSpecs(modules)
+```
 
 Remote Proxy libraries
 --
@@ -52,5 +92,5 @@ Remote Proxy libraries
 Various libraries exist for making the services deployable as remote proxies. Some of them are listed below:
 
  - [Socket.io on the server](www.github.com/christyharagan/uservice-socket.io-server)
- - [Socket.io on the client](www.github.com/christyharagan/uservice-socket.io-server)
- - [Marklogic database](www.github.com/christyharagan/uservice-marklogic)
+ - [Socket.io on the client](www.github.com/christyharagan/uservice-socket.io-client)
+ - [Marklogic database](www.github.com/christyharagan/markscript-uservices)
