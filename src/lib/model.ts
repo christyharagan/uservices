@@ -1,4 +1,4 @@
-import * as s from 'typescript-schema'
+import {reflective as s} from 'typescript-schema'
 
 export interface Method<S extends Service<any, any>> {
   name: string

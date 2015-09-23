@@ -1,4 +1,4 @@
-import * as s from 'typescript-schema'
+import {reflective as s, KeyValue, visitModules, ContainerVisitor, TypeKind, ClassConstructorVisitor, CompositeTypeVisitor, expressionToLiteral, visitClassConstructor} from 'typescript-schema'
 import * as m from './model'
 import * as d from './decorators'
 import * as v from './specVisitor'
@@ -8,7 +8,7 @@ export function defaultIsService(decorator: s.Decorator<s.ClassConstructor>) {
 }
 
 export function generateServiceSpecs<S extends m.Service<any, any>, M extends m.Method<any>, E extends m.Event<any>>(
-  modules: s.Map<s.Module>,
+  modules: KeyValue<s.Module>,
   isService?: (decorator: s.Decorator<s.ClassConstructor>) => boolean,
   onService?: (service: S, classConstructor: s.ClassConstructor) => void,
   onMethod?: (method: M, member: s.ClassConstructorMember) => M,
@@ -18,14 +18,14 @@ export function generateServiceSpecs<S extends m.Service<any, any>, M extends m.
   let services: m.Services<S> = {}
   isService = isService || defaultIsService
 
-  s.visitModules(modules, {
+  visitModules(modules, {
     onModule: function(module) {
-      return <s.TypeContainerVisitor>{
+      return <ContainerVisitor>{
         onClassConstructor: function(classConstructor) {
-          return <s.ClassConstructorVisitor>{
+          return <ClassConstructorVisitor>{
             onClassConstructorDecorator: function(decorator) {
               if (isService(decorator)) {
-                let name = <string>s.expressionToLiteral(decorator.parameters[0])
+                let name = <string>expressionToLiteral(decorator.parameters[0])
                 let service = <S><m.Service<M, E>>{
                   name: name,
                   methods: {},
@@ -62,11 +62,11 @@ export function generateServiceSpec<M extends m.Method<any>, E extends m.Event<a
     type: classConstructor
   }
 
-  s.visitClassConstructor(classConstructor, {
+  visitClassConstructor(classConstructor, {
     onInstanceType: function(t) {
-      return <s.CompositeTypeVisitor>{
+      return <CompositeTypeVisitor>{
         onMember: function(member) {
-          if ((<s.Type>member.type).typeKind === s.TypeKind.FUNCTION) {
+          if ((<s.Type>member.type).typeKind === TypeKind.FUNCTION) {
             let functionSchema = <s.FunctionType>member.type
             let type = functionSchema.type
 
