@@ -9,7 +9,8 @@
         "sourceMap": true,
         "sourceRoot": ".",
         "target": "es5",
-        "outDir": "."
+        "outDir": ".",
+        "moduleResolution": "node"
     },
     "formatCodeOptions": {
         "indentSize": 2,
@@ -18,8 +19,7 @@
     "filesGlob": [
         "./src/**/*.ts",
         "./lib/**/*.ts",
-        "./typings/**/*.d.ts",
-        "./node_modules/typescript/bin/typescript.d.ts"
+        "./typings/**/*.d.ts"
     ],
     "compileOnSave": true,
     "files": [
@@ -30,9 +30,15 @@
         "./src/lib/rfp.ts",
         "./src/lib/serialiserParser.ts",
         "./src/lib/specVisitor.ts",
+        "./lib/decorators.d.ts",
+        "./lib/generator.d.ts",
+        "./lib/index.d.ts",
+        "./lib/model.d.ts",
+        "./lib/rfp.d.ts",
+        "./lib/serialiserParser.d.ts",
+        "./lib/specVisitor.d.ts",
         "./typings/es6/es6.d.ts",
         "./typings/node/node.d.ts",
-        "./typings/tsd.d.ts",
-        "./node_modules/typescript/bin/typescript.d.ts"
+        "./typings/tsd.d.ts"
     ]
 }
