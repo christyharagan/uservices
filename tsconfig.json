@@ -13,26 +13,8 @@
         "indentSize": 2,
         "tabSize": 2
     },
-    "filesGlob": [
-        "./src/**/*.ts",
-        "./lib/**/*.ts",
-        "./typings/**/*.d.ts"
-    ],
     "compileOnSave": true,
-    "files": [
-        "./lib/decorators.d.ts",
-        "./lib/generator.d.ts",
-        "./lib/index.d.ts",
-        "./lib/model.d.ts",
-        "./lib/rfp.d.ts",
-        "./lib/serialiserParser.d.ts",
-        "./lib/specVisitor.d.ts",
-        "./src/lib/decorators.ts",
-        "./src/lib/generator.ts",
-        "./src/lib/index.ts",
-        "./src/lib/model.ts",
-        "./src/lib/rfp.ts",
-        "./src/lib/serialiserParser.ts",
-        "./src/lib/specVisitor.ts"
+    "exclude": [
+        "node_modules"
     ]
 }

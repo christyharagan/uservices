@@ -1,6 +1,6 @@
 {
   "name": "uservices",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Library to enable remoting of an object with asynchronous functions.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
